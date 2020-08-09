@@ -16,7 +16,7 @@ export function i64tof32_wasm2js(a: i64): f32 {
   if (b <= 1 << 53) {
     return <f32><f64>a;
   } else {
-    return reinterpret<f32>(<u32>s << 31 | u64tof32_js_impl(b));
+    return reinterpret<f32>(<u32>s << 31 | u64tof32_wasm2js_impl(b));
   }
 }
 
@@ -24,11 +24,11 @@ export function u64tof32_wasm2js(a: u64): f32 {
   if (a <= 1 << 53) {
     return <f32><f64>a;
   } else {
-    return reinterpret<f32>(u64tof32_js_impl(a));
+    return reinterpret<f32>(u64tof32_wasm2js_impl(a));
   }
 }
 
-function u64tof32_js_impl(a: u64): u32 {
+function u64tof32_wasm2js_impl(a: u64): u32 {
   // see: llvm/compiler-rt/lib/builtins/floatundisf.c
   const FLT_MANT_DIG = 24;
   let sd = 64 - clz(a);

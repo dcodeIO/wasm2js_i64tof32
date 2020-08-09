@@ -15,7 +15,7 @@
   local.get $0
   f32.convert_i64_s
  )
- (func $assembly/index/u64tof32_js_impl (param $0 i64) (result i32)
+ (func $assembly/index/u64tof32_wasm2js_impl (param $0 i64) (result i32)
   (local $1 i32)
   (local $2 i64)
   (local $3 i32)
@@ -98,7 +98,7 @@
    f32.demote_f64
   else
    local.get $2
-   call $assembly/index/u64tof32_js_impl
+   call $assembly/index/u64tof32_wasm2js_impl
    local.get $1
    i32.wrap_i64
    i32.const 31
@@ -117,7 +117,7 @@
    f32.demote_f64
   else
    local.get $0
-   call $assembly/index/u64tof32_js_impl
+   call $assembly/index/u64tof32_wasm2js_impl
    f32.reinterpret_i32
   end
  )

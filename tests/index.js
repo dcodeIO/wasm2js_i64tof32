@@ -5,6 +5,11 @@ const {
   u64tof32_wasm2js
 } = require("..");
 
+// const {
+//   i64tof32_wasm2js,
+//   u64tof32_wasm2js,
+// } = require("./js");
+
 const IMPRECISE = true;
 
 var values = [
@@ -140,9 +145,9 @@ values.forEach(([value, isImprecise]) => {
   var expected = value > 0 ? u64tof32_wasm(value) : i64tof32_wasm(value);
   var actual = value > 0 ? u64tof32_wasm2js(value) : i64tof32_wasm2js(value);
   var imprecise = value > 0 ? u64tof32_js(value) : i64tof32_js(value);
-  console.log(`i64           : ${value}\ni64->f32      : ${BigInt(expected)}\ni64->f64->f32 : ${BigInt(imprecise)}\n`);
+  console.log(`i64           : ${value}\ni64->f32      : ${BigInt(expected)}\ni64->f64->f32 : ${BigInt(imprecise)}\ni64->???->f32 : ${BigInt(actual)}\n`);
   if (actual != expected) {
-    throw Error("[actual] " + actual + " != " + expected + " [expected]");
+    throw Error(`[actual] ${BigInt(actual)} != ${BigInt(expected)} [expected]`);
   }
   if (isImprecise) {
     if (imprecise == expected) throw Error("actually not imprecise: " + value);
