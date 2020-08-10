@@ -34,13 +34,8 @@ function u64tof32_wasm2js_impl(a: u64): u32 {
   let sd = 64 - clz(a);
   let e = <u32>sd - 1;
   let m = <u32>(a >> (sd - (FLT_MANT_DIG + 2)))
-        | <u32>((a & (~1 >>> ((64 + FLT_MANT_DIG + 2) - sd))) != 0);
-  m |= (m & 4) >> 2;
-  ++m;
-  m >>= 2;
-  if (m & 1 << FLT_MANT_DIG) {
-    m >>= 1;
-    ++e;
-  }
-  return (e + 127) << 23 | (m & 0x007FFFFF);
+        | u32((a & (~1 >>> ((64 + FLT_MANT_DIG + 2) - sd))) != 0);
+  m = ((m | (m & 4) >> 2) + 1) >> 2;
+  let k = u32((m & 1 << FLT_MANT_DIG) != 0);
+  return ((e + k) + 127) << 23 | ((m >> k) & 0x007FFFFF);
 }

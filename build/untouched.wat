@@ -20,6 +20,7 @@
   (local $1 i64)
   (local $2 i32)
   (local $3 i32)
+  (local $4 i32)
   i32.const 64
   i64.extend_i32_s
   local.get $0
@@ -63,12 +64,8 @@
   i32.const 2
   i32.shr_u
   i32.or
-  local.set $3
-  local.get $3
   i32.const 1
   i32.add
-  local.set $3
-  local.get $3
   i32.const 2
   i32.shr_u
   local.set $3
@@ -77,22 +74,19 @@
   i32.const 24
   i32.shl
   i32.and
-  if
-   local.get $3
-   i32.const 1
-   i32.shr_u
-   local.set $3
-   local.get $2
-   i32.const 1
-   i32.add
-   local.set $2
-  end
+  i32.const 0
+  i32.ne
+  local.set $4
   local.get $2
+  local.get $4
+  i32.add
   i32.const 127
   i32.add
   i32.const 23
   i32.shl
   local.get $3
+  local.get $4
+  i32.shr_u
   i32.const 8388607
   i32.and
   i32.or

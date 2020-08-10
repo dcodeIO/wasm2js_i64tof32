@@ -19,17 +19,12 @@
   (local $1 i32)
   (local $2 i64)
   (local $3 i32)
+  local.get $0
   i64.const 64
   local.get $0
   i64.clz
   i64.sub
   local.tee $2
-  i32.wrap_i64
-  i32.const 1
-  i32.sub
-  local.set $3
-  local.get $0
-  local.get $2
   i64.const 26
   i64.sub
   i64.shr_u
@@ -58,22 +53,19 @@
   local.tee $1
   i32.const 16777216
   i32.and
-  if (result i32)
-   local.get $1
-   i32.const 1
-   i32.shr_u
-   local.set $1
-   local.get $3
-   i32.const 1
-   i32.add
-  else
-   local.get $3
-  end
-  i32.const 127
+  i32.const 0
+  i32.ne
+  local.tee $3
+  local.get $2
+  i32.wrap_i64
+  i32.add
+  i32.const 126
   i32.add
   i32.const 23
   i32.shl
   local.get $1
+  local.get $3
+  i32.shr_u
   i32.const 8388607
   i32.and
   i32.or
