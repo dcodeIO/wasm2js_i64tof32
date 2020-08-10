@@ -7,7 +7,7 @@ function reinterpret_f32(x) {
 }
 
 exports.i64tof32_wasm2js = function i64tof32_wasm2js(a) {
-  a %= 0x10000000000000000n;
+  a = BigInt.asIntN(64, a);
   let s = a >> 63n;
   let b = (a ^ s) - s;
   if (b <= 1n << 53n) {
@@ -18,7 +18,7 @@ exports.i64tof32_wasm2js = function i64tof32_wasm2js(a) {
 }
 
 exports.u64tof32_wasm2js = function u64tof32_wasm2js(a) {
-  a %= 0x10000000000000000n;
+  a = BigInt.asUintN(64, a);
   if (a <= 1n << 53n) {
     return Math.fround(Number(a));
   } else {
@@ -29,8 +29,7 @@ exports.u64tof32_wasm2js = function u64tof32_wasm2js(a) {
 function clz64(n) {
   let lo = Number(n & 0xFFFFFFFFn) | 0;
   let hi = Number(n >> 32n) | 0;
-  let mask = (hi ^ (hi - 1)) >>> 31;
-  return Math.clz32((hi & ~mask) | (lo & mask)) + (mask & 32);
+  return hi ? Math.clz32(hi) : 32 + Math.clz32(lo);
 }
 
 function u64tof32_wasm2js_impl(a) {
